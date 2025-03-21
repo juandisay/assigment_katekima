@@ -1,12 +1,18 @@
-#!/usr/bin/env python3
+'''
+Module: LFSR
+Author: juandisay <juandi.syafrin@gmail.com>
+'''
 
 class BasicLFSR:
-    """A basic Linear Feedback Shift Register (LFSR) implementation with a fixed configuration.
-    This implementation uses a 4-bit register with hardwired feedback function.
+    """
+    A basic Linear Feedback Shift Register (LFSR) implementation 
+    with a fixed configuration. This implementation uses a 4-bit 
+    register with hardwired feedback function.
     """
     
     def __init__(self, initial_state=0b0110):
-        """Initialize the LFSR with a given state.
+        """
+        Initialize the LFSR with a given state.
         
         Args:
             initial_state (int): The initial 4-bit state (default: 0110)
@@ -15,7 +21,8 @@ class BasicLFSR:
     
     @property
     def state(self):
-        """Get the current state of the register.
+        """
+        Get the current state of the register.
         
         Returns:
             int: The current state as an integer
@@ -23,7 +30,8 @@ class BasicLFSR:
         return self._state
     
     def next_bit(self):
-        """Generate the next bit in the stream and update the state.
+        """
+        Generate the next bit in the stream and update the state.
         
         Returns:
             int: The next bit (0 or 1) in the stream
@@ -36,13 +44,16 @@ class BasicLFSR:
         self._state = ((self._state >> 1) | (feedback << 3)) & 0b1111
         return output
 
+
 class GeneralLFSR:
-    """A general-purpose Linear Feedback Shift Register (LFSR) implementation
+    """
+    A general-purpose Linear Feedback Shift Register (LFSR) implementation
     that allows customization of register size and tap sequence.
     """
     
     def __init__(self, size, taps, initial_state=None):
-        """Initialize the LFSR with given parameters.
+        """
+        Initialize the LFSR with given parameters.
         
         Args:
             size (int): The size of the register in bits
@@ -66,7 +77,8 @@ class GeneralLFSR:
     
     @property
     def size(self):
-        """Get the size of the register.
+        """
+        Get the size of the register.
         
         Returns:
             int: The size of the register in bits
@@ -75,7 +87,8 @@ class GeneralLFSR:
     
     @property
     def state(self):
-        """Get the current state of the register.
+        """
+        Get the current state of the register.
         
         Returns:
             int: The current state as an integer
@@ -84,7 +97,8 @@ class GeneralLFSR:
     
     @state.setter
     def state(self, value):
-        """Set the current state of the register.
+        """
+        Set the current state of the register.
         
         Args:
             value (int): The new state
@@ -92,11 +106,13 @@ class GeneralLFSR:
         self._state = value & self._mask
     
     def reset(self):
-        """Reset the register to all 1s."""
+        """
+        Reset the register to all 1s."""
         self._state = self._mask
     
     def next_bit(self):
-        """Generate the next bit in the stream and update the state.
+        """
+        Generate the next bit in the stream and update the state.
         
         Returns:
             int: The next bit (0 or 1) in the stream
@@ -113,6 +129,7 @@ class GeneralLFSR:
         self._state = ((self._state >> 1) | (feedback << (self._size - 1))) & self._mask
         return output
 
+
 def test_basic_lfsr():
     """Test the BasicLFSR implementation."""
     print("Testing BasicLFSR:")
@@ -123,6 +140,7 @@ def test_basic_lfsr():
     for i in range(20):
         bit = lfsr.next_bit()
         print(f"Step {i+1}: State = {format(lfsr.state, '04b')}, Output = {bit}")
+
 
 def test_general_lfsr():
     """Test the GeneralLFSR implementation configured to match BasicLFSR."""
@@ -135,6 +153,7 @@ def test_general_lfsr():
     for i in range(20):
         bit = lfsr.next_bit()
         print(f"Step {i+1}: State = {format(lfsr.state, '04b')}, Output = {bit}")
+
 
 def main():
     """Main function to demonstrate LFSR implementations."""
